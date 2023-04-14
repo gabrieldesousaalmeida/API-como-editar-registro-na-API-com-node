@@ -35,7 +35,6 @@ app.get('/', (req, res)=>{
 })
 
 //visualizando apenas um regitro na API
-//listando na API
 app.get('/artigos/:id', (req, res)=>{
     const artigo = Artigo.findOne({_id: req.params.id})
     .then((artigo)=>{
@@ -44,6 +43,21 @@ app.get('/artigos/:id', (req, res)=>{
         return res.status(400).json({
             error: true,
             message: 'Error: erro na consulta do artigo no banco de dados ' + error
+        })
+    })
+})
+
+app.put('/artigos/:id', (req, res)=>{
+    const artigos = Artigo.updateOne({_id: req.params.id}, req.body)
+    .then((artigo)=>{
+        return res.status(400).json({
+            error: false,
+            message: 'Artigo editado com sucesso',
+        })
+    }).catch((error)=>{
+        return res.status(400).json({
+            error: true,
+            message: 'erro ao editar registro ' +error
         })
     })
 })
